@@ -2,7 +2,8 @@ extends ../layout
 
 block content
 	div(id='content')
-		h1(id='title')= title
+		h1(id='title')
+			a(href='/') title
 		p(id='page-content') Welcome to #{title}
 		img(id='landing-img', alt = 'Jquery Image', src='data:img/png;base64,#{src}', width='500', height='500')
 	div.loginbox

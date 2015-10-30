@@ -1,0 +1,70 @@
+extends layout
+extends layout
+
+block content
+  h1#title NHK program list
+  //p #{param}
+  form#select_form(action="/list", method="post")
+    select#area(name="area")
+      each area in param.area
+        if selected && area.code == selected.area
+          option(value='#{area.code}', selected="true", onclick="sendRequest()") #{area.name}
+        else
+          option(value='#{area.code}', onclick="sendRequest()") #{area.name}
+    select#service(name="service")
+      each service in param.service
+        if selected && service.code == selected.service
+          option(value='#{service.code}', selected="true", onclick="sendRequest()") #{service.name}
+        else
+          option(value='#{service.code}', onclick="sendRequest()") #{service.name}
+    select#date(name="date")
+      each date in param.date
+        if selected && date == selected.date
+          option(value='#{date}', selected="true", onclick="sendRequest()") #{date}
+        else
+          option(value='#{date}', onclick="sendRequest()") #{date}
+    select#genre(name="genre")
+      each gen in param.genre
+        if selected && gen.code == selected.genre
+          option(value='#{gen.code}', selected="true", onclick="sendRequest()") #{gen.name}
+        else
+          option(value='#{gen.code}', onclick="sendRequest()") #{gen.name}
+  form#search_form(action="/search", method="post")
+    input#searck_key(type="text", name="key")
+    button#submitButton(type="submit") SEARCH
+  button#test TEST
+  .table-content
+    table
+      thead
+        tr
+          th Logo
+          th Name
+          th Start
+          th End
+          th Subtitle
+      tbody       
+        if !data
+          tr
+            td(colspan="5")  No data!
+        else
+          each pg, index in data
+            tr(class=(index%2==0) ? 'odd' : 'event')
+              td 
+                img(src='#{pg.service.logo_s.url}', height='#{pg.service.logo_s.height}', width='#{pg.service.logo_s.width}')
+              td #{pg.title}
+              td #{pg.start_time.substring(11,16)}
+              td #{pg.end_time.substring(11,16)}
+              td #{pg.subtitle}
+    //end of table    
+  //end of dv table-content
+  .page
+  if paging
+    - var i = 0;
+    p from #{paging.from} - #{paging.des} in #{paging.fieldNum}
+    while i++ < paging.pageNum
+      if i==paging.currentPage
+        a.paging#current(href='/list/#{i}') #{i}
+      else
+        a.paging(href='/list/#{i}') #{i}
+  else
+    p paging null!

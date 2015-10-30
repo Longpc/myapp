@@ -6,3 +6,44 @@ body {
 a {
   color: #00B7FF;
 }
+table {
+	font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+	width: 100%;
+	border-collapse: collapse;
+	border: medium none;
+	display: table;
+	border-spacing: 0px;
+}
+.table-content td, th {
+	border: 1px solid #98BF21;
+	padding: 3px 7px 2px;
+}
+.table-content th {
+	font-size: 1.4em;
+	text-align: left;
+	padding-top: 5px;
+	padding-bottom: 4px;
+	background-color: #A7C942;
+}
+.table-content tr.odd td {
+	background-color: #EAF2D3;
+}
+.table-content tr.event td {
+	background-color: none;
+}
+.page {
+	position: relative;
+}
+.paging {
+	position: sticky;
+	display: inline-block;
+	border: 1px solid #98BF21;
+	width: 15px;
+	height: 15px;
+	vertical-align: baseline;
+	margin-right: 10px; 
+	padding: 8px;
+}
+.paging#current {
+	background-color: burlywood;
+}

@@ -1,12 +1,16 @@
-var express = require('express');
-var router = express.Router();
+var express     = require('express');
+var router      = express.Router();
 
-router.use(function timeLog(req, res, next) {
+/*router.use(function timeLog(req, res, next) {
   console.log('Request at: ', new Date().toISOString().replace(/T/, ' '));
   console.log(req.method);
   console.log(req.originalUrl);
   next();
-})
+})*/
+router.use(function(req, res, next) {
+  console.log("2. Request at: %s %s - %s", new Date().toISOString().replace(/T/,  ' '), req.method, req.originalUrl);
+  return next();
+});
 /* Handler function */
  var fn1 = function(req, res, next) {
    console.log('CB0');
@@ -61,8 +65,23 @@ router.get('/dl', function(req, res) {
 router.post('/login', function(req, res) {
   // console.log('Username: ',req.param('user'));
   // console.log('Password: ', req.param('password'));
-  console.log(req.body);
-  res.send("Login successful");
+  var data = req.body;
+  console.log(data);
+  if(data.user == data.password) {
+    res.send("Login failed. Please try again!");
+  }else 
+  {
+    res.status(200);
+    /*res.set('Content-type', 'text/html');
+    res.send('<html><body>'+
+              '<h1>Hello ' + data.user + '</h1>'+
+              '</body> </html>'
+              );*/
+    res.render('users/userslist', {name : data.users.toString()});
+  }
+  /*res.send("Login successful. Hello %s", data.user);
+  If success or not condition here
+  res.status(200).send("Login successful. Hello %s", data.user);*/
 });
 
 
